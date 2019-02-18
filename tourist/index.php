@@ -73,7 +73,7 @@ $db = new Database();
 
 		<div id ="info"  ></div>
 <!-- begin content -->
-	<div class="container-fluid">
+	<div class="container">
 			
 		<div class="panel panel-info">
 		  <div class="panel-heading">List of Boats Available</div>
