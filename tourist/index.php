@@ -192,7 +192,9 @@ $db = new Database();
 						<!-- modal END -->
 	  		 	<?php
 		  		 		}//end foreacyh of select all boats
-		  		 	}//
+		  		 	}else{
+						echo 'No result.';
+					}
 		  		 ?>
 		  </div>
 		</div>
