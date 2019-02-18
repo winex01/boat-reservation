@@ -74,13 +74,47 @@ $db = new Database();
 		<div id ="info"  ></div>
 <!-- begin content -->
 	<div class="container">
-			
+		<div class="row">
+			<div class="col-lg-6">
+
+				<form class="form-horizontal" method="post" action="/tourist/index.php">
+					<div class="input-group">
+					<input type="text" name="search" value="<?= ( isset($_POST['search']) && !empty($_POST['search']) ) ? $_POST['search'] : ''; ?>" class="form-control" placeholder="Search for...">
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-info" type="button">Go!</button>
+					</span>
+					</div><!-- /input-group -->
+				</form>
+
+			</div><!-- /.col-lg-6 -->
+			<div class="col-lg-6"></div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+		<br>
 		<div class="panel panel-info">
 		  <div class="panel-heading">List of Boats Available</div>
 		  <div class="panel-body">
-		  		<?php 
+				  <?php 
 		  			$sql = 'SELECT * FROM boats ORDER by b_name';
-		  		 	$res = $db->getRows($sql);
+					$params = [];
+					  $temp = null;
+					if (isset($_POST['search']) && !empty($_POST['search'])) {
+						$temp = $_POST['search'];
+						$sql = "SELECT * 
+								FROM boats 
+								WHERE b_name like ?
+								OR b_cpcty like ?
+								OR b_price <= ?
+								OR b_on like ?
+								ORDER by b_name";
+						$params = [
+							'%'.$temp.'%',
+							'%'.$temp.'%',
+							$temp,
+							'%'.$temp.'%',
+						];
+					}
+					
+					  $res = $db->getRows($sql, $params);
 		  		 	//echo print_r($res);
 		  		 	if($res){
 		  		 		foreach ($res as $r) {
